@@ -199,3 +199,30 @@
     }
   }
 }
+
+.mixin-grid() {
+  display: -ms-grid;
+  display: grid;
+}
+
+.mixin-grid-template-rows(@template) {
+  -ms-grid-rows: @template;
+  grid-template-rows: @template;
+}
+
+.mixin-grid-template-columns(@template) {
+  -ms-grid-columns: @template;
+  grid-template-columns: @template;
+}
+
+.mixin-grid-row(@row: 1, @span: 1) {
+  -ms-grid-row: @row;
+  -ms-grid-row-span: @span;
+  grid-row: @row ~'/' @span + @row;
+}
+
+.mixin-grid-column(@column: 1, @span: 1) {
+  -ms-grid-column: @column;
+  -ms-grid-column-span: @span;
+  grid-column: @column ~'/' @span + @column;
+}
