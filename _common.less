@@ -42,7 +42,6 @@
 
 @button-radius: 3px;
 @button-padding: 6px 12px;
-@button-ghost-border: 2px;
 
 // MIXINS
 
@@ -54,17 +53,18 @@
 }
 
 .mixin-button(@size: 'medium') {
+  @color: white;
+
   border: 0;
   border-radius: @button-radius;
   background-color: @mint;
   text-align: center;
   text-transform: uppercase;
-  color: @white;
+  color: @color;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   padding: @button-padding;
-  cursor: pointer;
   position: relative;
   box-shadow: inset 0 -2px 0 0 @mint-dark;
   font-weight: bold;
@@ -83,48 +83,57 @@
 
   &:hover {
     text-decoration: none;
-    color: @white;
+    color: @color;
   }
 
   &:not([disabled]):not(.disabled) {
     &:hover {
-      background-color: hsla(@mint-dark, .4);
+      background-color: @mint-dark;
       box-shadow: none;
+      cursor: pointer;
     }
   }
 
   &[disabled],
   &.disabled {
-    background-color: hsla(@mint, .4);
-    cursor: default;
+    background-color: hsla(@mint, .3);
     box-shadow: none;
   }
 
   &.doing {
     background-color: @mint-dark;
-    color: transparent;
     box-shadow: none;
-
-    img {
-      visibility: hidden;
-    }
+    .mixin-invisible-content;
+    .mixin-button-spinner(@white);
   }
 
   &.done {
     background-color: @lime;
     box-shadow: none;
   }
+}
 
+.mixin-invisible-content() {
+  color: transparent;
+
+  * {
+    visibility: hidden;
+  }
+}
+
+.mixin-button-spinner(@color) {
   .vtex__icon-spinner {
-    color: @white;
+    color: @color;
     max-height: 80%;
+    visibility: visible; // Overrides .mixin-invisible-content
     .mixin-absolute-center();
   }
 }
 
 .mixin-button-ghost(@size: 'medium') {
+  @border-style: solid;
+
   border-radius: @button-radius;
-  border: @button-ghost-border solid;
   color: @mint-light;
   text-align: center;
   text-transform: uppercase;
@@ -132,7 +141,6 @@
   display: inline-flex;
   align-items: center;
   padding: @button-padding;
-  cursor: pointer;
   font-weight: bold;
   font-family: @font-default;
   line-height: 1;
@@ -140,38 +148,48 @@
   & when (@size = 'small') {
     font-size: 12px;
     min-height: 30px;
+    border: 1px @border-style;
   }
 
   & when (@size = 'medium') {
     font-size: 14px;
     min-height: 50px;
+    border: 1px @border-style;
   }
 
   &:hover {
-    text-decoration: none;
+    text-decoration: none; // Overrides bootstrap default style
+  }
+
+  &:not([disabled]):not(.disabled) {
+    &:hover {
+      color: @mint-dark;
+      cursor: pointer;
+    }
   }
 
   &[disabled],
   &.disabled {
     color: hsla(@mint, .3);
-    cursor: default;
   }
 
-  &:not([disabled]):not(.disabled) {
-    &:hover {
-      box-shadow: inset 0 -2px 0 0 @mint-dark;
-      background-color: @mint-light;
-      color: @white;
-      border-top: 0;
-      border-bottom: 0;
-      border-color: transparent;
-    }
+  &.doing {
+    border-color: @mint-dark;
+    .mixin-invisible-content;
+    .mixin-button-spinner(@white);
+  }
+
+  &.done {
+    @background-color: @lime;
+
+    background-color: @background-color;
+    border-color: @background-color;
   }
 }
 
 .mixin-button-ghost-grey(@size: 'medium') {
   border-radius: @button-radius;
-  border: @button-ghost-border solid @grey-light;
+  border: 2px solid @grey-light;
   display: inline-block;
   position: relative;
   font-weight: bold;
@@ -190,14 +208,11 @@
   }
 
   &.doing {
-    color: transparent;
-
-    .vtex__icon-spinner {
-      color: @mint;
-      max-height: 80%;
-      .mixin-absolute-center();
-    }
+    .mixin-invisible-content;
+    .mixin-button-spinner(@mint);
   }
+
+  &.done {}
 }
 
 .mixin-grid() {
