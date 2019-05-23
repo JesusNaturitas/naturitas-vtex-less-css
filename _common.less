@@ -43,6 +43,16 @@
 @button-radius: 3px;
 @button-padding: 6px 12px;
 
+// SCROLLBAR
+
+@scrollbar: {
+  thin: thin;
+  width: 6px;
+  thumb-border-radius: 3px;
+  thumb-color: @grey-dark;
+  track-color: transparent;
+}
+
 // MIXINS
 
 .mixin-absolute-center() {
@@ -243,4 +253,25 @@
   -ms-grid-column: @column;
   -ms-grid-column-span: @span;
   grid-column: @column ~'/' @span + @column;
+}
+
+.mixin-scrollbar(@variant: @scrollbar) {
+  scrollbar-width: @variant[thin];
+
+  scrollbar-face-color: @variant[thumb-color];
+  scrollbar-track-color: @variant[track-color];
+  scrollbar-color: @variant[thumb-color] @variant[track-color];
+
+  &::-webkit-scrollbar {
+    width: @variant[width];
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: @variant[thumb-color];
+    border-radius: @variant[thumb-border-radius];
+  }
+
+  &::-webkit-scrollbar-track {
+    background: @variant[track-color];
+  }
 }
