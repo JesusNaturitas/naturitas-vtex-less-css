@@ -53,6 +53,25 @@
   track-color: transparent;
 }
 
+// CUSTOM CHECKBOX
+
+@checkbox-custom: {
+  svg: '../public/images/check-dark.svg';
+  svg-color: @grey-dark-3;
+  box-border-color: @grey-light;
+  box-border-color-selected: @grey-light;
+  box-background-color: @white;
+  box-background-color-selected: @white;
+}
+
+@checkbox-custom-green: {
+  svg: '../public/images/check-white.svg';
+  box-border-color: @grey-light;
+  box-border-color-selected: transparent;
+  box-background-color: #fff;
+  box-background-color-selected: #5CB8A3;
+}
+
 // MIXINS
 
 .mixin-absolute-center() {
@@ -273,5 +292,57 @@
 
   &::-webkit-scrollbar-track {
     background: @variant[track-color];
+  }
+}
+
+.mixin-checkbox-custom(@variant: @checkbox-custom) {
+  @box-width: 18px;
+  @box-height: 18px;
+  @border-width: 1px;
+  @margin-right: 10px;
+  @padding-left: @border-width + @box-width + @border-width + @margin-right;
+  @left: 0;
+  @top: 0;
+  @inner-left: 2px;
+  @inner-right: 2px;
+  @inner-top: 3px;
+  @inner-bottom: 4px;
+  @check-svg: @variant[svg];
+
+  padding-left: @padding-left;
+  position: relative;
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: @left;
+    top: @top;
+    width: @box-width;
+    height: @box-height;
+    border: @border-width solid @variant[box-border-color];
+    border-radius: 3px;
+    background-color: @variant[box-background-color];
+  }
+
+  &.selected {
+    &:before {
+      background: @variant[box-background-color-selected];
+      border-color: @variant[box-border-color-selected];
+    }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: @box-width - @inner-left - @inner-right;
+    height: @box-width - @inner-top - @inner-bottom;
+    left: @left + @inner-left;
+    top: @top + @inner-top;
+    background: url(@check-svg) no-repeat;
+  }
+
+  &:not(.selected):after {
+    display: none;
   }
 }
