@@ -82,6 +82,11 @@
   icon-background-color: @mint;
 }
 
+// BORDER-RADIUS
+
+@border-radius-pill: ~'20%/50%';
+@border-radius-circle: 50%;
+
 // MIXINS
 
 .mixin-absolute-center() {
@@ -402,5 +407,69 @@
 
   &:not(.selected):after {
     display: none;
+  }
+}
+
+.mixin-toggle() {
+  @box-width: 53px;
+  @box-height: 24px;
+  @icon-width: 9px;
+  @icon-height: 9px;
+  @icon-width-selected: 12px;
+  @icon-height-selected: 12px;
+
+  @switch-margin-top: 2px;
+  @switch-margin-bottom: 2px;
+  @switch-margin-left: 2px;
+  @switch-margin-right: 2px;
+  @switch-height: @box-height - @switch-margin-top - @switch-margin-bottom;
+  @switch-width: @switch-height;
+  @switch-margin-left-selected: @box-width - @switch-width - @switch-margin-left;
+
+  @border-width: 0;
+  @margin-right: 10px;
+  @padding-left: @border-width + @box-width + @border-width + @margin-right;
+  @left: 0;
+  @top: 0;
+
+  padding-left: @padding-left;
+  position: relative;
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: @left;
+    top: @top;
+    width: @box-width;
+    height: @box-height;
+    border-radius: @border-radius-pill;
+    background: @beige-light-3;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: @switch-width;
+    height: @switch-height;
+    left: @left + @switch-margin-left;
+    top: @top + @switch-margin-top;
+    border-radius: @border-radius-circle;
+    transition: left .5s;
+    background: @white url('../public/images/close-light.svg') no-repeat;
+    background-size: @icon-width @icon-height;
+    background-position: center;
+  }
+
+  &.selected {
+    &:before {
+      background-color: @mint;
+    }
+
+    &:after {
+      left: @left + @switch-margin-left-selected;
+      background-image: url('../public/images/check-mint.svg');
+      background-size: @icon-width-selected @icon-height-selected;
+    }
   }
 }
