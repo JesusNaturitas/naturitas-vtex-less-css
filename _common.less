@@ -72,6 +72,16 @@
   box-background-color-selected: #5CB8A3;
 }
 
+// CUSTOM RADIO
+
+@radio-custom: {
+  icon-background-color: @grey-dark-3;
+}
+
+@radio-custom-mint: {
+  icon-background-color: @mint;
+}
+
 // MIXINS
 
 .mixin-absolute-center() {
@@ -340,6 +350,54 @@
     left: @left + @inner-left;
     top: @top + @inner-top;
     background: url(@check-svg) no-repeat;
+  }
+
+  &:not(.selected):after {
+    display: none;
+  }
+}
+
+.mixin-radio-custom(@variant: @radio-custom) {
+  @box-width: 16px;
+  @box-height: 16px;
+  @border-width: 1px;
+  @margin-right: 10px;
+  @padding-left: @border-width + @box-width + @border-width + @margin-right;
+  @left: 0;
+  @top: 0;
+  @inner-left: 3px;
+  @inner-right: 3px;
+  @inner-top: 3px;
+  @inner-bottom: 3px;
+  @border-radius: 50%;
+
+  padding-left: @padding-left;
+  position: relative;
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: @left;
+    top: @top;
+    width: @box-width;
+    height: @box-height;
+    border: @border-width solid @grey-light;
+    border-radius: @border-radius;
+    background-color: @white;
+  }
+
+  &.selected:before {}
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: @box-width - @inner-left - @inner-right;
+    height: @box-width - @inner-top - @inner-bottom;
+    left: @left + @inner-left;
+    top: @top + @inner-top;
+    background-color: @variant[icon-background-color];
+    border-radius: @border-radius;
   }
 
   &:not(.selected):after {
