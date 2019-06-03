@@ -43,6 +43,11 @@
 @button-radius: 3px;
 @button-padding: 6px 12px;
 
+// TOOLTIPS
+
+@tooltip-background-color: hsl(0, 0%, 23%);
+@tooltip-arrow-size: 10px;
+
 // SCROLLBAR
 
 @scrollbar: {
@@ -474,7 +479,7 @@
   }
 }
 
-.mixin-triangle(@direction: bottom, @size: 10px, @color: #3b3b3b) {
+.mixin-triangle(@direction: bottom, @size: @tooltip-arrow-size, @color: @tooltip-background-color) {
   border-width: 10px;
   border-style: solid;
   border-color: transparent;
