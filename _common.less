@@ -473,3 +473,25 @@
     }
   }
 }
+
+.mixin-triangle(@direction: bottom, @size: 10px, @color: #3b3b3b) {
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent;
+
+  & when (@direction = top) {
+    border-bottom-color: @color;
+  }
+
+  & when (@direction = bottom) {
+    border-top-color: @color;
+  }
+
+  & when (@direction = left) {
+    border-right-color: @color;
+  }
+
+  & when (@direction = right) {
+    border-left-color: @color;
+  }
+}
