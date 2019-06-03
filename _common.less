@@ -495,3 +495,12 @@
     border-left-color: @color;
   }
 }
+
+// Put svg code as valid background-image, on all modern browsers including IE11
+// https://css-tricks.com/probably-dont-base64-svg/
+.mixin-background-svg(@code, @fill: '') {
+  @code_fill: replace(@code, 'fill=""', 'fill="@{fill}"');
+  @escape: escape(~'@{code_fill}');
+  @url: ~'data:image/svg+xml,@{escape}';
+  background-image: ~"url('@{url}')";
+}
